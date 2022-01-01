@@ -5,15 +5,13 @@ require("dotenv").config();
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
-const { listen } = require("express/lib/application");
 
-// Middleware
+//Middleware
 app.use(cors());
 app.use(express.json());
 
 // Database Configuration
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.4b6iz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-console.log(uri);
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -26,10 +24,72 @@ async function run() {
     const database = client.db("car_rental");
 
     // Collections
+    const servicesCollection = database.collection("services");
+    const brandsCollection = database.collection("brands");
+    const modelsCollection = database.collection("models");
+    const rentsCollection = database.collection("rents");
+    const reviewsCollection = database.collection("reviews");
+    const usersCollection = database.collection("users");
+
+    ////// Brands API Starts //////
+
+    /// Get All Brands ///
+    app.get("/brands", async (req, res) => {
+      const cursor = brandsCollection.find({});
+      const brands = await cursor.toArray();
+      res.send(brands);
+    });
+
+    /// Get Single Brand Data ///
+    app.get("/brands/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const singleBrand = await brandsCollection.findOne(query);
+      res.json(singleBrand);
+    });
+
+    /// Post Brand Data ///
+    app.post("/brands/add", async (req, res) => {
+      const brand = req.body;
+      const result = await brandsCollection.insertOne(brand);
+      res.json(result);
+    });
+
+    /// Delete Single Brand Data ///
+    app.delete("/brands/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: ObjectId(id) };
+      const result = await brandsCollection.deleteOne(query);
+      res.json(result);
+    });
+
+    /// Update Single Brand ///
+    app.put("/brands/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedBrand = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedData = {
+        $set: {
+          name: updatedBrand.name,
+          image: updatedBrand.image,
+          origin: updatedBrand.origin,
+        },
+      };
+      const result = await brandsCollection.updateOne(
+        filter,
+        updatedData,
+        options
+      );
+      res.json(result);
+    });
   } finally {
     // await client.close();
   }
 }
+
+run().catch(console.dir);
 
 app.get("/", (req, res) => {
   res.send("I am from server port 5000");

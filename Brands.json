@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Audi",
+        "image":"https://i.ibb.co/q5Zdf5c/audi.png",
+        "origin": "USA"
+    },
+    {
+        "name": "Toyota",
+        "image":"https://i.ibb.co/1KHMskd/toyota.png",
+        "origin": "Japan"
+    },
+    {
+        "name": "BMW",
+        "image":"https://i.ibb.co/n3djHYr/bmw.png",
+        "origin": "UK"
+    }
+]
