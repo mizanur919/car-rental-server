@@ -84,6 +84,58 @@ async function run() {
       );
       res.json(result);
     });
+
+    ////// Model API Starts //////
+
+    /// Get All Brands ///
+    app.get("/models", async (req, res) => {
+      const cursor = modelsCollection.find({});
+      const models = await cursor.toArray();
+      res.send(models);
+    });
+
+    /// Get Single Brand Data ///
+    app.get("/models/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const singleModel = await modelsCollection.findOne(query);
+      res.json(singleModel);
+    });
+
+    /// Post Brand Data ///
+    app.post("/models/add", async (req, res) => {
+      const model = req.body;
+      const result = await modelsCollection.insertOne(model);
+      res.json(result);
+    });
+
+    /// Delete Single Brand Data ///
+    app.delete("/models/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await modelsCollection.deleteOne(query);
+      res.json(result);
+    });
+
+    /// Update Single Brand ///
+    app.put("/models/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedModel = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedData = {
+        $set: {
+          brandName: updatedModel.brandName,
+          modelName: updatedModel.modelName,
+        },
+      };
+      const result = await modelsCollection.updateOne(
+        filter,
+        updatedData,
+        options
+      );
+      res.json(result);
+    });
   } finally {
     // await client.close();
   }
