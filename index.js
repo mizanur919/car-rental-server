@@ -31,7 +31,9 @@ async function run() {
     const reviewsCollection = database.collection("reviews");
     const usersCollection = database.collection("users");
 
+    ///////////////////////////////
     ////// Brands API Starts //////
+    ///////////////////////////////
 
     /// Get All Brands ///
     app.get("/brands", async (req, res) => {
@@ -84,6 +86,68 @@ async function run() {
       );
       res.json(result);
     });
+
+    /////////////////////////////////
+    ////// Services API Starts //////
+    /////////////////////////////////
+
+    /// Get All Services ///
+    app.get("/services", async (req, res) => {
+      const cursor = servicesCollection.find({});
+      const services = await cursor.toArray();
+      res.send(services);
+    });
+
+    /// Get Single Service Data ///
+    app.get("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const singleService = await servicesCollection.findOne(query);
+      res.json(singleService);
+    });
+
+    /// Post Service Data ///
+    app.post("/services/add", async (req, res) => {
+      const service = req.body;
+      const result = await servicesCollection.insertOne(service);
+      res.json(result);
+    });
+
+    /// Delete Single Service Data ///
+    app.delete("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await servicesCollection.deleteOne(query);
+      res.json(result);
+    });
+
+    /// Update Single Service ///
+    app.put("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedService = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedData = {
+        $set: {
+          title: updatedService.title,
+          model: updatedService.model,
+          brand: updatedService.brand,
+          rentCode: updatedService.rentCode,
+          carImage: updatedService.carImage,
+          perDayAmount: updatedService.perDayAmount,
+          rating: updatedService.rating,
+          totalAvailable: updatedService.totalAvailable,
+        },
+      };
+      const result = await servicesCollection.updateOne(
+        filter,
+        updatedData,
+        options
+      );
+      res.json(result);
+    });
+
+    ///
   } finally {
     // await client.close();
   }

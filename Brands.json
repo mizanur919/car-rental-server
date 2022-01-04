@@ -1,17 +1,39 @@
 [
-    {
-        "name": "Audi",
-        "image":"https://i.ibb.co/q5Zdf5c/audi.png",
-        "origin": "USA"
-    },
-    {
-        "name": "Toyota",
-        "image":"https://i.ibb.co/1KHMskd/toyota.png",
-        "origin": "Japan"
-    },
-    {
-        "name": "BMW",
-        "image":"https://i.ibb.co/n3djHYr/bmw.png",
-        "origin": "UK"
-    }
+  {
+    "name": "Audi",
+    "image": "https://i.ibb.co/q5Zdf5c/audi.png",
+    "origin": "USA"
+  },
+  {
+    "name": "Toyota",
+    "image": "https://i.ibb.co/1KHMskd/toyota.png",
+    "origin": "Japan"
+  },
+  {
+    "name": "BMW",
+    "image": "https://i.ibb.co/n3djHYr/bmw.png",
+    "origin": "UK"
+  },
+  {
+    "title": "Audi-450LA With Air Condition",
+    "model": "450LA",
+    "brand": "Audi",
+    "rentCode": "Rnt-008",
+    "carImage": "https://i.ibb.co/q5Zdf5c/audi.png",
+    "perDayAmount": 200,
+    "rating": 4,
+    "isAirCondition": true,
+    "isAvaiable": true
+  },
+  {
+    "title": "Toyota-787TY Luxury",
+    "model": "787TY",
+    "brand": "Toyota",
+    "rentCode": "Rnt-007",
+    "carImage": "https://i.ibb.co/1KHMskd/toyota.png",
+    "perDayAmount": 100,
+    "rating": 5,
+    "isAirCondition": true,
+    "isAvaiable": false
+  }
 ]
