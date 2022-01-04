@@ -31,7 +31,9 @@ async function run() {
     const reviewsCollection = database.collection("reviews");
     const usersCollection = database.collection("users");
 
+    ///////////////////////////////
     ////// Brands API Starts //////
+    ///////////////////////////////
 
     /// Get All Brands ///
     app.get("/brands", async (req, res) => {
@@ -85,7 +87,9 @@ async function run() {
       res.json(result);
     });
 
+    //////////////////////////////
     ////// Model API Starts //////
+    //////////////////////////////
 
     /// Get All Brands ///
     app.get("/models", async (req, res) => {
