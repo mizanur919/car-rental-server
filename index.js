@@ -211,6 +211,10 @@ app.get("/", (req, res) => {
   res.send("I am from server port 5000");
 });
 
+app.get("/test", (req, res) => {
+  res.send("From Testing Function");
+});
+
 app.listen(port, () => {
   console.log("Listening port ", port);
 });
